@@ -2,32 +2,40 @@
 import { useState } from "react";
 
 const StepThreeLocalDate = (values) => {
-  localStorage.setItem("stepThreeDate", values);
+  if (typeof window !== "undefined") {
+    localStorage.setItem("stepThreeDate", values);
+  }
 };
 
 const StepThreeLocalImage = (imageValues) => {
-  localStorage.setItem("stepThreeImage", JSON.stringify(imageValues));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("stepThreeImage", JSON.stringify(imageValues));
+  }
 };
 
 export const StepThree = (props) => {
   const { handlenextStep, handlebackStep } = props;
 
   const getItemFronLocalStepthreeDate = () => {
-    const values = localStorage.getItem("stepThreeDate");
-    if (values) {
-      return { values };
-    } else {
-      return {
-        date: "",
-      };
+    if (typeof window !== "undefined") {
+      const values = localStorage.getItem("stepThreeDate");
+      if (values) {
+        return { values };
+      }
     }
+    return {
+      date: "",
+    };
   };
 
   const getItemFronLocalStepthreeImage = () => {
-    const imageValues = localStorage.getItem("stepThreeImage");
-    if (imageValues) {
-      return JSON.parse(imageValues);
-    } else return null;
+    if (typeof window !== "undefined") {
+      const imageValues = localStorage.getItem("stepThreeImage");
+      if (imageValues) {
+        return JSON.parse(imageValues);
+      }
+    }
+    return null;
   };
 
   const [date, setDate] = useState(getItemFronLocalStepthreeDate);

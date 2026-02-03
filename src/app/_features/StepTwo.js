@@ -11,18 +11,21 @@ const password = (pass) => {
   return /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).+$/.test(pass);
 };
 const stepTwoLocal = (values) => {
-  localStorage.setItem("stepTwo", JSON.stringify(values));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("stepTwo", JSON.stringify(values));
+  }
 };
 export const StepTwo = (props) => {
   const { handlenextStep, handlebackStep } = props;
 
   const getItemFromLocalStepTwo = () => {
-    const values = localStorage.getItem("stepTwo");
-    if (values) {
-      return JSON.parse(values);
-    } else {
-      return { email: "", phoneNumber: "", password: "", confirmPassword: "" };
+    if (typeof window !== "undefined") {
+      const values = localStorage.getItem("stepTwo");
+      if (values) {
+        return JSON.parse(values);
+      }
     }
+    return { email: "", phoneNumber: "", password: "", confirmPassword: "" };
   };
 
   const [nameValues, setNameValues] = useState(getItemFromLocalStepTwo);

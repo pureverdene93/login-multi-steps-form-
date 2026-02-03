@@ -8,13 +8,13 @@ import { StepFour } from "./_features/StepFour";
 
 export default function Home() {
   const [step, setStep] = useState(1);
-  const [currentStep, setCurrentStep] = useState();
+  // const [currentStep, setCurrentStep] = useState();
 
-  const clearLocal = () => {
-    if (step === 4) {
-      return localStorage.clear;
-    }
-  };
+  // const clearLocal = () => {
+  //   if (step === 4) {
+  //     return localStorage.clear;
+  //   }
+  // };
 
   const nextStep = () => {
     setStep(step + 1);
@@ -29,7 +29,6 @@ export default function Home() {
 
   return (
     <>
-      {" "}
       {step === 1 && <StepOne handlenextStep={nextStep} />}
       {step === 2 && (
         <StepTwo handlebackStep={backStep} handlenextStep={nextStep} />
@@ -37,7 +36,7 @@ export default function Home() {
       {step === 3 && (
         <StepThree handlebackStep={backStep} handlenextStep={nextStep} />
       )}
-      {step === 4 && <StepFour clearLocal={clearLocal} />}
+      {step === 4 && <StepFour />}
     </>
   );
 }

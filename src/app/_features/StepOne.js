@@ -5,34 +5,31 @@ import { FormInput } from "../_components/form-input";
 const inputHasSpecialChac = (string) => {
   return /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/.test(string);
 };
-// /[\d\W]+/
+
 const stepOneLocal = (values) => {
-  localStorage.setItem("stepOne", JSON.stringify(values));
+  if (typeof window !== "undefined") {
+    localStorage.setItem("stepOne", JSON.stringify(values));
+  }
 };
 
 export const StepOne = (props) => {
   const { handlenextStep } = props;
 
   const getItemFronLocalStepOne = () => {
-    const values = localStorage.getItem("stepOne");
-    if (values) {
-      return JSON.parse(values);
-    } else {
-      return {
-        firstName: "",
-        lastName: "",
-        userName: "",
-      };
+    if (typeof window !== "undefined") {
+      const values = localStorage.getItem("stepOne");
+      if (values) {
+        return JSON.parse(values);
+      }
     }
+    return {
+      firstName: "",
+      lastName: "",
+      userName: "",
+    };
   };
 
   const [nameValues, setNameValues] = useState(getItemFronLocalStepOne);
-
-  // const stringObject = JSON.stringify(nameValues);
-  // console.log(stringObject);
-
-  // const object = JSON.parse(stringObject);
-  // console.log(object);
 
   const [errorState, setErrorState] = useState(false);
 
@@ -99,7 +96,6 @@ export const StepOne = (props) => {
               errorMessage={
                 "First name cannot contain special characters or numbers."
               }
-              // inputBorderColor={inputHasSpecialChac(nameValues.firstName)}
             />
 
             <FormInput
@@ -112,7 +108,6 @@ export const StepOne = (props) => {
               errorMessage={
                 "Last name cannot contain special characters or numbers."
               }
-              // inputBorderColor={inputHasSpecialChac(nameValues.lastName)}
             />
 
             <FormInput
@@ -125,7 +120,6 @@ export const StepOne = (props) => {
               errorMessage={
                 "This username is already taken. Please choose another one."
               }
-              // inputBorderColor={inputHasSpecialChac(nameValues.userName)}
             />
           </div>
         </div>
